@@ -1,0 +1,28 @@
+
+<?php error_reporting(-1); ?>
+<?php ini_set('display_errors', true); ?>
+<?php
+require('encryption.php');
+require('password.php');
+  if ((!isset($_GET)) || (empty($_GET['fileid']))){
+   die("Nebyl specifikovan soubor ke stazeni"); 
+  }
+  $secret = base64_decode($_GET['fileid']);
+  $pole = decrypt($secret,$key);
+  $pole = explode("|",$pole);
+  $files = $pole[1];
+  $filename = dirname(__FILE__). 'invoices/'.$files.'.pdf';
+  
+  if (file_exists($filename)){
+    header("Content-type:application/pdf");
+    header("Content-Disposition:attachment;filename='downloaded.pdf'");
+    echo file_get_contents($filename);
+  }else{
+    echo "hledam soubor: " .$filename ."<br>"
+    
+    echo $pole ."<br>";
+    echo $files; 
+    
+    die("Soubor nenalezen"); 
+  }
+?>

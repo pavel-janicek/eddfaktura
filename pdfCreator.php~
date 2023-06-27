@@ -1,0 +1,123 @@
+<?php
+
+require_once('tfpdf.php');
+
+class PdfCreator extends tFPDF{
+
+protected $payment_id;
+protected $payment_meta;
+protected $seller_info;
+protected $defaultfontfamily;
+protected $defaultfontstyle;
+protected $defaultfontsize;
+
+public function __construct($defaultfontfamily,$defaultfontstyle,$defaultfontsize){
+ parent::__construct();
+ $this->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true); 
+ $this->AddFont('DejaVu','B','DejaVuSansCondensed-Bold.ttf',true); 
+ $this->AddFont('DejaVu','I','DejaVuSansCondensed-Oblique.ttf',true); 
+ $this->SetFont($defaultfontfamily,$defaultfontstyle,$defaultfontsize);
+ $this->defaultfontfamily = $defaultfontfamily;
+ $this->defaultfontstyle = $defaultfontstyle;
+ $this->defaultfontsize = $defaultfontsize;
+ $this->AliasNbPages();
+ $this->AddPage();  
+}
+
+public function czech($original_text){
+	$czech_text = iconv('UTF-8', 'windows-1252', $original_text);
+	return $original_text;
+}
+
+public function header()
+{
+    // Logo
+    //$this->Image('logo.png',10,6,30);
+    // Arial bold 15
+    $this->SetFont('DejaVu','B',15);
+    // Move to the right
+    $this->Cell(80);
+    // Title
+	$txt = 'Daňový doklad';
+	$cztxt = $this->czech($txt);
+    $this->Cell(30,10,$cztxt,0,0,'C');
+    // Line break
+    $this->Ln(20);
+}
+
+public function footer()
+{
+    // Position at 1.5 cm from bottom
+    $this->SetY(-15);
+    // Arial italic 8
+    $this->SetFont('DejaVu','I',8);
+    // Page number
+    $this->Cell(0,10,'Strana '.$this->PageNo().'/{nb}',0,0,'C');
+}
+
+/* Simple Table
+* Inputs: $header - array of header columns
+* $data - one dimensional array */
+public function basicTable($header, $data)
+{
+    // Header
+    foreach($header as $col)
+        $this->Cell(40,7,$col,1);
+    $this->Ln();
+    // Data
+    foreach($data as $row)
+    {
+        foreach($row as $col)
+            $this->Cell(40,6,$col,1);
+        $this->Ln();
+    }
+}
+
+public function setSellerInfo($edd_options){
+  $this->seller_info['eddfaktura_jmeno'] = $edd_options['eddfaktura_jmeno'];
+  $this->seller_info['eddfaktura_prijmeni'] = $edd_options['eddfaktura_prijmeni'];
+  $this->seller_info['eddfaktura_stat'] = $edd_options['eddfaktura_stat'];
+  $this->seller_info['eddfaktura_ic'] = $edd_options['eddfaktura_ic'];
+  $this->seller_info['eddfaktura_dic'] = $edd_options['eddfaktura_dic'];
+  $this->seller_info['eddfaktura_dph'] = $edd_options['eddfaktura_dph'];
+  $this->seller_info['eddfaktura_ulice'] = $edd_options['eddfaktura_ulice'];
+  $this->seller_info['eddfaktura_mesto'] = $edd_options['eddfaktura_mesto'];
+  $this->seller_info['eddfaktura_psc'] = $edd_options['eddfaktura_psc'];
+}
+
+public function sellerInfo(){
+
+ $this->SetFont($this->defaultfontfamily,'B',$this->defaultfontsize);
+ $txt = "Dodavatel:";
+ $this->Cell(0,10,$txt,0,1);
+  $this->SetFont($this->defaultfontfamily,$this->defaultfontstyle,$this->defaultfontsize);
+ if(!empty($this->seller_info['eddfaktura_prijmeni'])){
+   $ortxt = $this->seller_info['eddfaktura_jmeno'] ." ". $this->seller_info['eddfaktura_prijmeni'];
+   $txt = $this->czech($ortxt);
+ }else{
+   $ortxt = $this->seller_info['eddfaktura_jmeno'];
+   $txt = $this->czech($ortxt);
+ }
+ $this->Cell(0,10,$txt,0,1);
+ $this->Cell(0,10,$this->czech($this->seller_info['eddfaktura_ulice']),0,1);
+ $ortxt = $this->seller_info['eddfaktura_psc'] . " ". $this->seller_info['eddfaktura_mesto'];
+ $txt = $this->czech($ortxt);
+ $this->Cell(0,10,$txt,0,1);
+ $ortxt = "IČ: ". $this->seller_info['eddfaktura_ic'];
+ $txt = $this->czech($ortxt);
+ $this->Cell(0,10,$txt,0,1);
+ $ortxt = "DIČ: ". $this->seller_info['eddfaktura_dic'];
+ $txt = $this->czech($ortxt);
+ $this->Cell(0,10,$txt,0,1);
+ if(!empty($this->seller_info['eddfaktura_dph'])){
+  $this->Cell(0,10,$this->czech('Nejsem plátcem DPH'),0,1);
+ }
+ 
+ 
+}
+
+
+
+}
+
+?>
