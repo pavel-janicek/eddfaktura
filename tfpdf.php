@@ -76,6 +76,10 @@ var $PDFVersion;         // PDF version number
 *                               Public methods                                 *
 *                                                                              *
 *******************************************************************************/
+public function __construct($orientation='P', $unit='mm', $size='A4'){
+	$this->tFPDF($orientation, $unit, $size);
+}
+
 function tFPDF($orientation='P', $unit='mm', $size='A4')
 {
 	// Some checks
