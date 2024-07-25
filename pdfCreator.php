@@ -108,8 +108,9 @@ public function setBuyerInfo(){
  $ulice = isset( $this->payment_meta['edd_ulice'] ) ? $this->payment_meta['edd_ulice'] : '';
  $mesto = isset( $this->payment_meta['edd_mesto'] ) ? $this->payment_meta['edd_mesto'] : '';
  $psc = isset( $this->payment_meta['edd_psc'] ) ? $this->payment_meta['edd_psc'] : '';
- $jmeno = isset( $this->payment_meta['user_info']['name'] ) ? $this->payment_meta['user_info']['name'] : '';
+ $jmeno = isset( $this->payment_meta['user_info']['first_name'] ) ? $this->payment_meta['user_info']['first_name'] : '';
  $prijmeni = isset( $this->payment_meta['user_info']['last_name'] ) ? $this->payment_meta['user_info']['last_name'] : '';
+ $email =   isset( $this->payment_meta['user_info']['email'] ) ? $this->payment_meta['user_info']['email'] : '';
  $this->buyer_info['firma'] = $firma;
  $this->buyer_info['stat'] = $stat;
  $this->buyer_info['ic'] = $ic;
@@ -119,6 +120,7 @@ public function setBuyerInfo(){
  $this->buyer_info['psc'] = $psc;
  $this->buyer_info['jmeno'] = $jmeno;
  $this->buyer_info['prijmeni'] = $prijmeni;
+ $this->buyer_info['email'] = $email;
 }
 
 public function setPaymentMeta($meta){
@@ -170,6 +172,7 @@ public function buyerInfo(){
     $fullname = $this->buyer_info['jmeno'];
   }*/
   $this->Cell(70,10,$fullname,0,1);
+  $this->Cell(70, 10, $this->buyer_info['email'],0,1);
   $this->Cell(70,10,$this->buyer_info['ulice'],0,1);  
   $mestopsc = $this->buyer_info['psc'] . ' ' . $this->buyer_info['mesto'];
   $this->Cell(70,10,$mestopsc,0,1);
