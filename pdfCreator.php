@@ -89,15 +89,17 @@ $this->SetFont($this->defaultfontfamily,$this->defaultfontstyle,$this->defaultfo
 }
 
 public function setSellerInfo($edd_options){
-  $this->seller_info['eddfaktura_jmeno'] = $edd_options['eddfaktura_jmeno'];
-  $this->seller_info['eddfaktura_prijmeni'] = $edd_options['eddfaktura_prijmeni'];
-  $this->seller_info['eddfaktura_stat'] = $edd_options['eddfaktura_stat'];
-  $this->seller_info['eddfaktura_ic'] = $edd_options['eddfaktura_ic'];
-  $this->seller_info['eddfaktura_dic'] = $edd_options['eddfaktura_dic'];
-  $this->seller_info['eddfaktura_dph'] = $edd_options['eddfaktura_dph'];
-  $this->seller_info['eddfaktura_ulice'] = $edd_options['eddfaktura_ulice'];
-  $this->seller_info['eddfaktura_mesto'] = $edd_options['eddfaktura_mesto'];
-  $this->seller_info['eddfaktura_psc'] = $edd_options['eddfaktura_psc'];
+  $info = array();
+  $info['eddfaktura_jmeno'] = $edd_options['eddfaktura_jmeno'];
+  $info['eddfaktura_prijmeni'] = $edd_options['eddfaktura_prijmeni'];
+  $info['eddfaktura_stat'] = $edd_options['eddfaktura_stat'];
+  $info['eddfaktura_ic'] = $edd_options['eddfaktura_ic'];
+  $info['eddfaktura_dic'] = $edd_options['eddfaktura_dic'];
+  $info['eddfaktura_dph'] = $edd_options['eddfaktura_dph'];
+  $info['eddfaktura_ulice'] = $edd_options['eddfaktura_ulice'];
+  $info['eddfaktura_mesto'] = $edd_options['eddfaktura_mesto'];
+  $info['eddfaktura_psc'] = $edd_options['eddfaktura_psc'];
+  $this->seller_info = $info;
 }
 
 public function setBuyerInfo(){
