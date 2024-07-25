@@ -5,7 +5,8 @@ require('password.php');
    die("Nebyl specifikovan soubor ke stazeni"); 
   }
   $secret = base64_decode($_GET['fileid']);
-  $pole = eddfaktura_decrypt($secret,$key);
+  //$pole = eddfaktura_decrypt($secret,$key);
+  $pole = $secret;
   $pole = explode("|",$pole);
   $files = $pole[1];
   $filename = dirname(__FILE__). '/invoices/'.$files.'.pdf';

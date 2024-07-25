@@ -497,7 +497,8 @@ function eddfaktura_on_complete_purchase( $payment_id ) {
 
        require('password.php');
        $tajne = eddfaktura_edd_email_tag_datum($payment_id) .'|'.$payment_id;
-       $secret = base64_encode(eddfaktura_encrypt($tajne,$key));
+       //$secret = base64_encode(eddfaktura_encrypt($tajne,$key));
+		$secret = base64_encode($tajne);
        $link = get_site_url(). "/wp-content/plugins/eddfaktura/download.php?fileid=" .$secret;
        return $link;
      }else{
@@ -560,7 +561,8 @@ function eddfaktura_on_complete_purchase( $payment_id ) {
     //exit;
     //$link = get_site_url(). "/wp-content/plugins/eddfaktura/invoices/" .$payment_id .".pdf";
     $tajne = eddfaktura_edd_email_tag_datum($payment_id) .'|'.$payment_id;
-    $secret = base64_encode(eddfaktura_encrypt($tajne,$key));
+    //$secret = base64_encode(eddfaktura_encrypt($tajne,$key));
+	$secret = base64_encode($tajne);
     $link = get_site_url(). "/wp-content/plugins/eddfaktura/download.php?fileid=" .$secret;
     return $link;
 
