@@ -14,7 +14,7 @@ protected $defaultfontstyle;
 protected $defaultfontsize;
 
 public function __construct($defaultfontfamily,$defaultfontstyle,$defaultfontsize){
- parent::__construct();
+  tFPDF::__construct();
  $this->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true); 
  $this->AddFont('DejaVu','B','DejaVuSansCondensed-Bold.ttf',true); 
  $this->AddFont('DejaVu','I','DejaVuSansCondensed-Oblique.ttf',true); 
