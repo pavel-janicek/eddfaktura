@@ -13,7 +13,8 @@ protected $pavelCart;
 protected $defaultfontstyle;
 protected $defaultfontsize;
 
-public function __construct($defaultfontfamily,$defaultfontstyle,$defaultfontsize){
+public function __construct($defaultfontfamily,$defaultfontstyle,$defaultfontsize,$payment_id){
+ $this->payment_id = $payment_id;
  parent::__construct();
  $this->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true); 
  $this->AddFont('DejaVu','B','DejaVuSansCondensed-Bold.ttf',true); 
