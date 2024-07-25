@@ -31,6 +31,10 @@ public function czech($original_text){
 	return $original_text;
 }
 
+public function setPaymentID($payment_id){
+  $this->payment_id = $payment_id;
+}
+
 public function header()
 {
     // Logo
@@ -40,7 +44,7 @@ public function header()
     // Move to the right
     $this->Cell(80);
     // Title
-	$txt = 'Faktura';
+	$txt = 'Faktura ' . $this->payment_id;
 	$cztxt = $this->czech($txt);
     $this->Cell(30,10,$cztxt,0,0,'C');
     // Line break
