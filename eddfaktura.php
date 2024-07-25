@@ -3,7 +3,7 @@
 Plugin Name: PDF Faktura pro Easy Digital Downloads
 Plugin URL: http://cleverstart.cz
 Description: Vygeneruje PDF fakturu po zprocesování platby a pošle ji zákazníkovi na e-mail který uvedl při nákupu
-Version: 0.9.0
+Version: 0.9.1
 Author: Pavel Janíček
 Author URI: http://cleverstart.cz
 */
@@ -514,6 +514,9 @@ function eddfaktura_on_complete_purchase( $payment_id ) {
 	// Cart details
 	$cart_items = edd_get_payment_meta_cart_details( $payment_id );
     $pdf->setSellerInfo($edd_options);
+	$pdf->SetY(10);
+	$faktura = "Faktura " .$payment_id;
+	pdf->Cell(70,10,$faktura,0,1);
     $pdf->SetY(25);
     $pdf->sellerInfo();
     $pdf->setPaymentMeta($payment_meta);
